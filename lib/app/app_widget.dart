@@ -8,7 +8,7 @@ class AppWidget extends StatelessWidget {
       navigatorKey: Modular.navigatorKey,
       title: 'Flutter Slidy',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey[800],
+        primarySwatch: Colors.blueGrey,
         accentColor: Colors.blueGrey[800],
       ),
       initialRoute: '/',
