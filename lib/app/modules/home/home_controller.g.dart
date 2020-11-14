@@ -3,6 +3,16 @@
 part of 'home_controller.dart';
 
 // **************************************************************************
+// InjectionGenerator
+// **************************************************************************
+
+final $HomeController = BindInject(
+  (i) => HomeController(i<MainRepository>(), i<AppController>()),
+  singleton: true,
+  lazy: true,
+);
+
+// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
@@ -30,31 +40,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   Future getPokemons() {
     return _$getPokemonsAsyncAction.run(() => super.getPokemons());
-  }
-
-  final _$_HomeControllerBaseActionController =
-      ActionController(name: '_HomeControllerBase');
-
-  @override
-  dynamic setNomeCliente(dynamic value) {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.setNomeCliente');
-    try {
-      return super.setNomeCliente(value);
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setSobrenomeCliente(dynamic value) {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.setSobrenomeCliente');
-    try {
-      return super.setSobrenomeCliente(value);
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

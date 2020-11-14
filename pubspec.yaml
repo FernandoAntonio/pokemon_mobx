@@ -1,4 +1,4 @@
-name: novo
+name: pokemon_mobx
 description: A new Flutter project.
 version: 1.0.0+1
 
@@ -13,7 +13,7 @@ scripts:
     mobx_build_clean: $clean & $get & $runner build --delete-conflicting-outputs
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: ">=2.9.0-13.0 <3.0.0"
 
 dependencies:
   dio: ^3.0.10

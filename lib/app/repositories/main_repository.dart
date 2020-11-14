@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:novo/app/models/pokemons_model.dart';
-import 'package:novo/app/shared/constants.dart';
+import 'package:pokemon_mobx/app/models/pokemons_model.dart';
+import 'package:pokemon_mobx/app/shared/constants.dart';
 
 class MainRepository {
   MainRepository(this.dio);
@@ -9,7 +9,7 @@ class MainRepository {
 
   Future<Pokemons> getPokemons() async {
     try {
-      Response response = await dio.get(API_BASE_URL + methodGetPokemons);
+      Response response = await dio.get(apiBaseUrl + methodGetPokemons);
 
       if (response.statusCode == 200) {
         Pokemons pokemons = Pokemons.fromJson(response.data);

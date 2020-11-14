@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:novo/app/app_controller.dart';
-import 'package:novo/app/models/pokemons_model.dart';
-import 'package:novo/app/repositories/main_repository.dart';
+import 'package:mobx/mobx.dart';
+import 'package:pokemon_mobx/app/app_controller.dart';
+import 'package:pokemon_mobx/app/models/pokemons_model.dart';
+import 'package:pokemon_mobx/app/repositories/main_repository.dart';
 
 part 'home_controller.g.dart';
 
@@ -11,10 +10,9 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  _HomeControllerBase(this.repository, this.appController){
+  _HomeControllerBase(this.repository, this.appController) {
     getPokemons();
   }
-
   final MainRepository repository;
   final AppController appController;
 
@@ -22,13 +20,5 @@ abstract class _HomeControllerBase with Store {
   ObservableFuture<Pokemons> pokemons;
 
   @action
-  setNomeCliente(value) => appController.nomeCliente = value;
-
-  @action
-  setSobrenomeCliente(value) => appController.sobrenomeCliente = value;
-
-  @action
-  getPokemons() async{
-     pokemons = repository.getPokemons().asObservable();
-  }
+  getPokemons() async => pokemons = repository.getPokemons().asObservable();
 }

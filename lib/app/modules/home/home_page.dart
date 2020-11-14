@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:novo/app/app_controller.dart';
+
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
+
   const HomePage({Key key, this.title = "Home"}) : super(key: key);
 
   @override
@@ -14,47 +15,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
-  AppController appController = Modular.get<AppController>();
+  String formatPokemonNames(String name) {
+    if (name == null || name == '') {
+      return '';
+    } else {
+      String formattedName = name.replaceAll('-', ' ');
+      formattedName = name
+          .split(' ')
+          .map((string) => string[0].toUpperCase() + string.substring(1))
+          .join(' ');
+      return formattedName;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Observer(
-          builder: (_) {
-            return Text(appController.nomeCompleto);
-          },
-        ),
+        title: Text('All Pokemons'),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: TextField(
-              controller: TextEditingController(
-                text: appController.nomeCliente,
-              ),
-              onChanged: (value) => controller.setNomeCliente(value),
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: TextField(
-              controller: TextEditingController(
-                text: appController.sobrenomeCliente,
-              ),
-              onChanged: (value) => controller.setSobrenomeCliente(value),
-            ),
-          ),
-          SizedBox(height: 64.0),
           Expanded(
             child: Observer(
               builder: (_) {
-                if (controller.pokemons == null ||
-                    controller.pokemons.value == null) {
+                if (controller.pokemons == null || controller.pokemons.value == null) {
                   return Center(child: CircularProgressIndicator());
                 } else if (controller.pokemons.error != null) {
                   return Text('Ocorreu um erro inesperado');
@@ -63,15 +49,25 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     itemCount: controller.pokemons.value.results.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(5.0),
+                        height: 80.0,
+                        child: Card(
+                          margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                          child: Center(
+                            child: ListTile(
+                              leading: Image.network(
+                                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png'),
+                              title: Row(
+                                children: [
+                                  Text((index + 1).toString(),
+                                      style: TextStyle(color: Colors.grey[400])),
+                                  SizedBox(width: 8.0),
+                                  Text(formatPokemonNames(
+                                      controller.pokemons.value.results[index].name)),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        margin: EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 32.0),
-                        padding: EdgeInsets.all(16.0),
-                        child:
-                            Text(controller.pokemons.value.results[index].name),
                       );
                     },
                   );
